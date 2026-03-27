@@ -1,5 +1,5 @@
 import { apiClient } from './client';
-import type { TStrategiesResponse, TStrategy } from '@types';
+import type { TStrategy, ApiResponse } from '@types';
 
 type StrategyPayload = {
   description: string;
@@ -12,25 +12,30 @@ type StrategyUpdatePayload = {
 };
 
 export const getStrategies = async (page: number, limit: number) => {
-  const response = await apiClient.get<TStrategiesResponse>('/strategies', {
+  const response = await apiClient.get<ApiResponse<TStrategy[]>>('/strategies', {
     params: { page, limit },
   });
-  return response.data;
+  // API возвращает {success, data: [...], meta: {...}, ...}
+  // Возвращаем {strategies: data, meta} для совместимости со slice
+  return {
+    strategies: response.data.data,
+    meta: response.data.meta,
+  };
 };
 
 export const getStrategy = async (id: number) => {
-  const response = await apiClient.get<TStrategy>(`/strategies/${id}`);
-  return response.data;
+  const response = await apiClient.get<ApiResponse<TStrategy>>(`/strategies/${id}`);
+  return response.data.data;
 };
 
 export const createStrategy = async (data: StrategyPayload) => {
-  const response = await apiClient.post<TStrategy>('/strategies', data);
-  return response.data;
+  const response = await apiClient.post<ApiResponse<TStrategy>>('/strategies', data);
+  return response.data.data;
 };
 
 export const updateStrategy = async (id: number, data: StrategyUpdatePayload) => {
-  const response = await apiClient.put<TStrategy>(`/strategies/${id}`, data);
-  return response.data;
+  const response = await apiClient.put<ApiResponse<TStrategy>>(`/strategies/${id}`, data);
+  return response.data.data;
 };
 
 export const deleteStrategy = async (id: number) => {

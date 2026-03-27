@@ -39,12 +39,21 @@ function StrategyEdit() {
 
   useEffect(() => {
     if (currentStrategy) {
-      form.setFieldsValue({
-        description: currentStrategy.description,
-        parameters: JSON.stringify(currentStrategy.parameters, null, 2),
-      });
+      console.log('Strategy loaded:', currentStrategy);
+      // Используем setTimeout чтобы убедиться, что форма готова
+      setTimeout(() => {
+        form.setFieldsValue({
+          description: currentStrategy.description,
+          parameters: JSON.stringify(currentStrategy.parameters, null, 2),
+        });
+        console.log('Form values set');
+      }, 0);
     }
   }, [currentStrategy, form]);
+
+  useEffect(() => {
+    console.log('Form instance changed, loading:', loading, 'hasStrategy:', !!currentStrategy);
+  }, [form, loading, currentStrategy]);
 
   const onFinish = async (values: FormValues) => {
     if (!id) {
@@ -79,7 +88,7 @@ function StrategyEdit() {
   }
 
   return (
-    <Form form={form} layout="vertical" onFinish={onFinish}>
+    <Form form={form} layout="vertical" onFinish={onFinish} key={id}>
       <Form.Item
         name="description"
         label="Description"

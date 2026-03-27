@@ -3,17 +3,23 @@ export type TStrategy = {
   description: string;
   parameters: any;
   version: number;
-  created_at: string;
-  updated_at: string;
+  createdAt: string;
+  updatedAt: string;
 };
 
-export type TStrategiesResponse = {
-  data: TStrategy[];
-  meta: {
-    current_page: number;
-    last_page: number;
-    total: number;
-  };
+export type TStrategiesMeta = {
+  current_page: number;
+  last_page: number;
+  per_page: number;
+  total: number;
+};
+
+export type ApiResponse<T> = {
+  success: boolean;
+  data: T;
+  meta?: TStrategiesMeta;
+  message: string;
+  errors: any[];
 };
 
 export interface ImportMetaEnv {

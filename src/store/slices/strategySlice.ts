@@ -113,13 +113,16 @@ const strategySlice = createSlice({
         state.error = null;
       })
       .addCase(fetchStrategies.fulfilled, (state, action) => {
+        console.log('fetchStrategies.fulfilled payload:', action.payload);
         state.loading = false;
-        state.items = action.payload.data;
-        state.pagination = {
-          page: action.payload.meta.current_page,
-          total: action.payload.meta.total,
-          lastPage: action.payload.meta.last_page,
-        };
+        state.items = action.payload.strategies;
+        if (action.payload.meta) {
+          state.pagination = {
+            page: action.payload.meta.current_page,
+            total: action.payload.meta.total,
+            lastPage: action.payload.meta.last_page,
+          };
+        }
       })
       .addCase(fetchStrategies.rejected, (state, action) => {
         state.loading = false;

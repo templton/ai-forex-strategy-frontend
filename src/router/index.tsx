@@ -3,6 +3,7 @@ import MainLayout from '@containers/layout/MainLayout/MainLayout';
 import Hello from '@containers/page/Hello/Hello';
 import StrategyCreate from '@containers/page/StrategyCreate/StrategyCreate';
 import StrategyEdit from '@containers/page/StrategyEdit/StrategyEdit';
+import StrategyView from '@containers/page/StrategyView/StrategyView';
 import StrategyList from '@containers/page/StrategyList/StrategyList';
 
 export const router = createBrowserRouter([
@@ -29,6 +30,10 @@ export const router = createBrowserRouter([
       {
         path: 'strategies/edit/:id',
         element: <StrategyEdit />,
+      },
+      {
+        path: 'strategies/view/:id',
+        element: <StrategyView />,
       },
     ],
   },

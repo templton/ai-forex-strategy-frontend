@@ -1,5 +1,5 @@
 import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, message, Modal, Space, Table } from 'antd';
+import { Button, message, Modal, Space, Table, Typography } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -28,10 +28,31 @@ function StrategyList() {
   const columns: ColumnsType<TStrategy> = useMemo(
     () => [
       { title: 'ID', dataIndex: 'id', key: 'id', width: 80 },
-      { title: 'Description', dataIndex: 'description', key: 'description' },
+      {
+        title: 'Description',
+        dataIndex: 'description',
+        key: 'description',
+        render: (description: string, record: TStrategy) => (
+          <Typography.Link onClick={() => navigate(`/strategies/view/${record.id}`)}>
+            {description}
+          </Typography.Link>
+        ),
+      },
       { title: 'Version', dataIndex: 'version', key: 'version', width: 100 },
-      { title: 'Created', dataIndex: 'created_at', key: 'created_at', width: 180 },
-      { title: 'Updated', dataIndex: 'updated_at', key: 'updated_at', width: 180 },
+      {
+        title: 'Created',
+        dataIndex: 'createdAt',
+        key: 'createdAt',
+        width: 180,
+        render: (date: string) => new Date(date).toLocaleString(),
+      },
+      {
+        title: 'Updated',
+        dataIndex: 'updatedAt',
+        key: 'updatedAt',
+        width: 180,
+        render: (date: string) => new Date(date).toLocaleString(),
+      },
       {
         title: 'Actions',
         key: 'actions',
